@@ -1,9 +1,15 @@
 import { useMemo, useState } from "react";
-import useLocalStorageState from "../hooks/useLocalStorageState";
+import useLocalStorageState from "../hooks/useLocalStorageState.ts";
+
+type Task = {
+  id: number;
+  text: string;
+  done: boolean;
+};
 
 export default function TasksCard() {
-  const [tasks, setTasks] = useLocalStorageState("tasks", []);
-  const [text, setText] = useState("");
+  const [tasks, setTasks] = useLocalStorageState<Task[]>("tasks", []);
+  const [text, setText] = useState<string>("");
 
   const { total, completed, remaining } = useMemo(() => {
     const total = tasks.length;
@@ -18,10 +24,10 @@ export default function TasksCard() {
     setTasks((prev) => [...prev, { id: Date.now(), text: t, done: false }]);
     setText("");
   }
-  function toggleTask(id) {
+  function toggleTask(id: number) {
     setTasks((prev) => prev.map((t) => (t.id === id ? { ...t, done: !t.done } : t)));
   }
-  function deleteTask(id) {
+  function deleteTask(id: number) {
     setTasks((prev) => prev.filter((t) => t.id !== id));
   }
   function clearCompleted() {
@@ -67,11 +73,7 @@ export default function TasksCard() {
         <ul id="tasks">
           {tasks.map((t) => (
             <li key={t.id} className={`task${t.done ? " done" : ""}`} data-id={t.id}>
-              <input
-                type="checkbox"
-                checked={t.done}
-                onChange={() => toggleTask(t.id)}
-              />
+              <input type="checkbox" checked={t.done} onChange={() => toggleTask(t.id)} />
               <label title={t.text}>{t.text}</label>
               <button className="delete" aria-label={`Delete ${t.text}`} onClick={() => deleteTask(t.id)}>
                 ✕

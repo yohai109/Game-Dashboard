@@ -1,6 +1,6 @@
-import usePreciseSecondTicker from "../hooks/usePreciseSecondTicker";
-import { formatDate, formatTime } from "../utils/format";
 import { useMemo } from "react";
+import usePreciseSecondTicker from "../hooks/usePreciseSecondTicker.ts";
+import { formatDate, formatTime } from "../utils/format.ts";
 
 export default function WatchCard() {
   const now = usePreciseSecondTicker();

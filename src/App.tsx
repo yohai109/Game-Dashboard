@@ -1,5 +1,5 @@
-import WatchCard from "./components/WatchCard.jsx";
-import TasksCard from "./components/TasksCard.jsx";
+import WatchCard from "./components/WatchCard.tsx";
+import TasksCard from "./components/TasksCard.tsx";
 
 export default function App() {
   return (
