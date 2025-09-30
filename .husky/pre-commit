@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
 . "$(dirname "$0")/_/husky.sh"
 
-# Run ESLint auto-fix before commit
-npm run lint:fix
+# Run lint-staged to lint/format only staged files and re-stage the fixes
+npx --no-install lint-staged
