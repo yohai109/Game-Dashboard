@@ -14,4 +14,4 @@ export const WatchCard = () => {
       </div>
     </div>
   );
-}
+};

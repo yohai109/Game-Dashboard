@@ -20,4 +20,4 @@ export const usePreciseSecondTicker = (): Date => {
   }, []);
 
   return now;
-}
+};

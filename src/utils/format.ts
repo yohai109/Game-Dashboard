@@ -3,7 +3,7 @@ export const formatTime = (date: Date): { h: string; m: string; s: string } => {
   const m = String(date.getMinutes()).padStart(2, "0");
   const s = String(date.getSeconds()).padStart(2, "0");
   return { h, m, s };
-}
+};
 
 export const formatDate = (date: Date): string => {
   const day = date.toLocaleDateString(undefined, { weekday: "long" });
@@ -11,4 +11,4 @@ export const formatDate = (date: Date): string => {
   const month = date.toLocaleDateString(undefined, { month: "long" });
   const year = date.getFullYear();
   return `${day}, ${month} ${d}, ${year}`;
-}
+};

@@ -19,4 +19,4 @@ export const useLocalStorageState = <T>(key: string, initialValue: T) => {
   }, [key, state]);
 
   return [state, setState] as const;
-}
+};

@@ -99,4 +99,4 @@ export const TasksCard = () => {
       </div>
     </div>
   );
-}
+};
