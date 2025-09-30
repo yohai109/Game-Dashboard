@@ -1,0 +1,70 @@
+/* Card styles are inherited from parent */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.title {
+  margin: 0;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.button {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  color: inherit;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.content {
+  margin-top: 16px;
+  display: grid;
+  gap: 16px;
+}
+
+.section {
+  margin-bottom: 16px;
+}
+
+.sectionTitle {
+  margin: 0 0 8px 0;
+}
+
+.metrics {
+  display: grid;
+  gap: 8px;
+}
+
+.metricRow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.gpuSection {
+  margin-top: 8px;
+}
+
+.error {
+  color: #ef5350;
+  margin-top: 12px;
+}
+
+.loading {
+  margin-top: 12px;
+}

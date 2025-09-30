@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import type { SystemInfo } from "./types";
+import type { SystemInfo } from "../../../types/types";
 import { REFRESH_INTERVAL_MS } from "./utils";
 
 export const useSystemInfo = (autoRefresh: boolean) => {

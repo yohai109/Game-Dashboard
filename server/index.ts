@@ -37,5 +37,5 @@ app.use("/api", (_req: Request, res: Response) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`[server] Express server listening on http://localhost:${PORT}`);
+  console.log(`\x1b[32mExpress server listening on http://localhost:${PORT}\x1b[0m`);
 });

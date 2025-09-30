@@ -1,4 +1,4 @@
-import type { GpuInfo } from "./types";
+import { GpuInfo } from "../../../types/types";
 
 export const REFRESH_INTERVAL_MS = 1000;
 
