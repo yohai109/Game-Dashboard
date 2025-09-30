@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useCallback } from "react";
 import useLocalStorageState from "../hooks/useLocalStorageState.ts";
 
 type Task = {
@@ -11,28 +11,36 @@ export default function TasksCard() {
   const [tasks, setTasks] = useLocalStorageState<Task[]>("tasks", []);
   const [text, setText] = useState<string>("");
 
-  const { total, completed, remaining } = useMemo(() => {
-    const total = tasks.length;
+  const { completed, remaining } = useMemo(() => {
     const completed = tasks.filter((t) => t.done).length;
-    const remaining = total - completed;
-    return { total, completed, remaining };
+    const remaining = tasks.length - completed;
+    return { completed, remaining };
   }, [tasks]);
 
-  function addTask() {
+  const addTask = useCallback(() => {
     const t = text.trim();
     if (!t) return;
     setTasks((prev) => [...prev, { id: Date.now(), text: t, done: false }]);
     setText("");
-  }
-  function toggleTask(id: number) {
-    setTasks((prev) => prev.map((t) => (t.id === id ? { ...t, done: !t.done } : t)));
-  }
-  function deleteTask(id: number) {
-    setTasks((prev) => prev.filter((t) => t.id !== id));
-  }
-  function clearCompleted() {
+  }, [text, setTasks, setText]);
+
+  const toggleTask = useCallback(
+    (id: number) => {
+      setTasks((prev) => prev.map((t) => (t.id === id ? { ...t, done: !t.done } : t)));
+    },
+    [setTasks]
+  );
+
+  const deleteTask = useCallback(
+    (id: number) => {
+      setTasks((prev) => prev.filter((t) => t.id !== id));
+    },
+    [setTasks]
+  );
+
+  const clearCompleted = useCallback(() => {
     setTasks((prev) => prev.filter((t) => !t.done));
-  }
+  }, [setTasks]);
 
   return (
     <div className="card">
@@ -75,7 +83,11 @@ export default function TasksCard() {
             <li key={t.id} className={`task${t.done ? " done" : ""}`} data-id={t.id}>
               <input type="checkbox" checked={t.done} onChange={() => toggleTask(t.id)} />
               <label title={t.text}>{t.text}</label>
-              <button className="delete" aria-label={`Delete ${t.text}`} onClick={() => deleteTask(t.id)}>
+              <button
+                className="delete"
+                aria-label={`Delete ${t.text}`}
+                onClick={() => deleteTask(t.id)}
+              >
                 ✕
               </button>
             </li>
