@@ -1,0 +1,15 @@
+import usePreciseSecondTicker from "../hooks/usePreciseSecondTicker";
+import { formatDate, formatTime } from "../utils/format";
+import { useMemo } from "react";
+
+export default function WatchCard() {
+  const now = usePreciseSecondTicker();
+  const { h, m, s } = useMemo(() => formatTime(now), [now]);
+  const dateText = useMemo(() => formatDate(now), [now]);
+  return (
+    <div className="card">
+      <div id="watch" aria-live="polite" aria-label="Current time">{`${h}:${m}:${s}`}</div>
+      <div id="date" className="date">{dateText}</div>
+    </div>
+  );
+}
