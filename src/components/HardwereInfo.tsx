@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { SystemInfo } from "../../types/types";
+
+const REFRESH_INTERVAL_MS = 1000;
 
 export const HardwereInfo = () => {
   const [data, setData] = useState<SystemInfo | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [autoRefresh, setAutoRefresh] = useState<boolean>(true);
 
-  const fetchInfo = async () => {
+  const fetchInfo = useCallback(async () => {
     try {
       setError(null);
       const res = await fetch("/api/system-info");
@@ -19,12 +21,12 @@ export const HardwereInfo = () => {
     } catch (e: any) {
       setError(e?.message ?? "Failed to load system info");
     }
-  };
+  }, []);
 
   // Initial fetch on mount
   useEffect(() => {
     fetchInfo();
-  }, []);
+  }, [fetchInfo]);
 
   // Manage polling based on autoRefresh
   useEffect(() => {
@@ -32,12 +34,13 @@ export const HardwereInfo = () => {
     if (autoRefresh) {
       // Fetch immediately when turning on, then start interval
       fetchInfo();
-      timer = window.setInterval(fetchInfo, 3000);
+
+      timer = window.setInterval(fetchInfo, REFRESH_INTERVAL_MS);
     }
     return () => {
       if (timer) window.clearInterval(timer);
     };
-  }, [autoRefresh]);
+  }, [autoRefresh, fetchInfo]);
 
   const fmt = (n: number | null | undefined, unit = "", digits = 0) =>
     n == null ? "-" : `${n.toFixed(digits)}${unit}`;
