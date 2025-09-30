@@ -1,7 +1,7 @@
 export type GpuInfo = {
   name: string | null;
   vendor: string | null;
-  vram: number | null; // in MB
+  vram?: number | null; // in MB
   utilizationGpu: number | null; // percent 0-100
   temperatureGpu: number | null; // celsius
 };
