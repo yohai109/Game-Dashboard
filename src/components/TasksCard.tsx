@@ -1,5 +1,5 @@
 import { useMemo, useState, useCallback } from "react";
-import useLocalStorageState from "../hooks/useLocalStorageState.ts";
+import { useLocalStorageState } from "../hooks/useLocalStorageState.ts";
 
 type Task = {
   id: number;
@@ -7,7 +7,7 @@ type Task = {
   done: boolean;
 };
 
-export default function TasksCard() {
+export const TasksCard = () => {
   const [tasks, setTasks] = useLocalStorageState<Task[]>("tasks", []);
   const [text, setText] = useState<string>("");
 

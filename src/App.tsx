@@ -1,7 +1,7 @@
-import WatchCard from "./components/WatchCard.tsx";
-import TasksCard from "./components/TasksCard.tsx";
+import { WatchCard } from "./components/WatchCard.tsx";
+import { TasksCard } from "./components/TasksCard.tsx";
 
-export default function App() {
+export const App = () => {
   return (
     <div className="cards">
       <WatchCard />

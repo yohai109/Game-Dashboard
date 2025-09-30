@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-export default function usePreciseSecondTicker(): Date {
+export const usePreciseSecondTicker = (): Date => {
   const [now, setNow] = useState<Date>(() => new Date());
   const timer = useRef<number | null>(null);
 
