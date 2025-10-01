@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import { usePreciseSecondTicker } from "../../hooks/usePreciseSecondTicker.ts";
-import { formatDate, formatTime } from "../../utils/format.ts";
+import { usePreciseSecondTicker } from "../../hooks/usePreciseSecondTicker";
+import { formatDate, formatTime } from "../../utils/format";
 import styles from "./WatchCard.module.css";
 
 export const WatchCard = () => {
@@ -8,11 +8,24 @@ export const WatchCard = () => {
   const { h, m, s } = useMemo(() => formatTime(now), [now]);
   const dateText = useMemo(() => formatDate(now), [now]);
   return (
-    <div className={styles.container}>
-      <div className={styles.watch} aria-live="polite" aria-label="Current time">
-        {`${h}:${m}:${s}`}
+    <article className={styles.card}>
+      <div className={styles.watchContainer}>
+        <time
+          dateTime={now.toISOString()}
+          className={styles.time}
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          <span className={styles.hours}>{h}</span>
+          <span className={styles.colon}>:</span>
+          <span className={styles.minutes}>{m}</span>
+          <span className={styles.colon}>:</span>
+          <span className={styles.seconds}>{s}</span>
+        </time>
+        <div className={styles.date} aria-hidden="true">
+          {dateText}
+        </div>
       </div>
-      <div className={styles.date}>{dateText}</div>
-    </div>
+    </article>
   );
 };
