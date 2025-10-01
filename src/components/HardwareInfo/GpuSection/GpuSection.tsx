@@ -20,7 +20,7 @@ export const GpuSection = ({ gpu }: GpuSectionProps) => {
               <span>{metric.label}:</span>
               <span>{metric.value}</span>
             </div>
-            {metric.showProgress && <ProgressBar value={metric.valueNumber} color={metric.color} />}
+            {metric.showProgress && <ProgressBar value={metric.valueNumber} />}
           </div>
         ))}
       </div>

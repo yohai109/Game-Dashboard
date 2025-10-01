@@ -8,7 +8,7 @@ interface CpuSectionProps {
 }
 
 export const CpuSection = ({ cpu }: CpuSectionProps) => {
-  const { formattedLoad, formattedTemp, loadColor, tempColor } = useCpuSection(cpu);
+  const { formattedLoad, formattedTemp } = useCpuSection(cpu);
 
   if (cpu.load === null && cpu.temperature === null) {
     return null;
@@ -24,7 +24,7 @@ export const CpuSection = ({ cpu }: CpuSectionProps) => {
               <span>Load:</span>
               <span>{formattedLoad}</span>
             </div>
-            <ProgressBar value={cpu.load} color={loadColor} />
+            <ProgressBar value={cpu.load} />
           </>
         )}
         {cpu.temperature !== null && (
@@ -33,7 +33,7 @@ export const CpuSection = ({ cpu }: CpuSectionProps) => {
               <span>Temperature:</span>
               <span>{formattedTemp}</span>
             </div>
-            <ProgressBar value={cpu.temperature} color={tempColor} />
+            <ProgressBar value={cpu.temperature} />
           </>
         )}
       </div>
