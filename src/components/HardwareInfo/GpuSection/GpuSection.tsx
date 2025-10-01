@@ -1,4 +1,4 @@
-import { ProgressBar } from "../ProgressBar";
+import { ProgressBar } from "../../ui/ProgressBar";
 import { useGpuSection } from "./useGpuSection";
 import styles from "./GpuSection.module.css";
 import { GpuInfo } from "../../../../types/types";

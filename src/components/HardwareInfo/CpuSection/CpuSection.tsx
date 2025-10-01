@@ -1,4 +1,4 @@
-import { ProgressBar } from "../ProgressBar";
+import { ProgressBar } from "../../ui/ProgressBar";
 import { useCpuSection } from "./useCpuSection";
 import styles from "./CpuSection.module.css";
 import { CpuInfo } from "../../../../types/types";
