@@ -1,5 +1,6 @@
 import { useMemo, useState, useCallback } from "react";
-import { useLocalStorageState } from "../hooks/useLocalStorageState.ts";
+import { useLocalStorageState } from "../../hooks/useLocalStorageState.ts";
+import styles from "./TasksCard.module.css";
 
 type Task = {
   id: number;
@@ -43,17 +44,16 @@ export const TasksCard = () => {
   }, [setTasks]);
 
   return (
-    <div className="card">
-      <div className="tasks" aria-label="Tasks">
-        <div className="tasks-header">
-          <h2 className="tasks-title">Tasks</h2>
-          <div className="tasks-meta">
-            <span id="task-count" className="count-badge">
+    <div className={styles.container}>
+      <div className={styles.tasks} aria-label="Tasks">
+        <div className={styles.header}>
+          <h2 className={styles.title}>Tasks</h2>
+          <div className={styles.meta}>
+            <span className={styles.countBadge}>
               {remaining === 1 ? "1 task left" : `${remaining} tasks left`}
             </span>
             <button
-              id="clear-completed"
-              className="clear-btn"
+              className={styles.clearButton}
               type="button"
               style={{ display: completed > 0 ? "inline-flex" : "none" }}
               onClick={clearCompleted}
@@ -62,9 +62,9 @@ export const TasksCard = () => {
             </button>
           </div>
         </div>
-        <div className="task-input">
+        <div className={styles.inputContainer}>
           <input
-            id="new-task"
+            className={styles.input}
             type="text"
             placeholder="Add a task and press Enter"
             aria-label="New task"
@@ -74,17 +74,24 @@ export const TasksCard = () => {
               if (e.key === "Enter") addTask();
             }}
           />
-          <button id="add-task" type="button" onClick={addTask}>
+          <button className={styles.addButton} type="button" onClick={addTask}>
             Add
           </button>
         </div>
-        <ul id="tasks">
+        <ul className={styles.taskList}>
           {tasks.map((t) => (
-            <li key={t.id} className={`task${t.done ? " done" : ""}`} data-id={t.id}>
-              <input type="checkbox" checked={t.done} onChange={() => toggleTask(t.id)} />
-              <label title={t.text}>{t.text}</label>
+            <li key={t.id} className={`${styles.task} ${t.done ? styles.done : ""}`}>
+              <input
+                type="checkbox"
+                className={styles.taskCheckbox}
+                checked={t.done}
+                onChange={() => toggleTask(t.id)}
+              />
+              <span className={styles.taskLabel} title={t.text}>
+                {t.text}
+              </span>
               <button
-                className="delete"
+                className={styles.deleteButton}
                 aria-label={`Delete ${t.text}`}
                 onClick={() => deleteTask(t.id)}
               >
@@ -93,7 +100,7 @@ export const TasksCard = () => {
             </li>
           ))}
         </ul>
-        <p id="empty" className="empty" style={{ display: tasks.length === 0 ? "block" : "none" }}>
+        <p className={styles.empty} style={{ display: tasks.length === 0 ? "block" : "none" }}>
           No tasks yet. Add your first task above.
         </p>
       </div>

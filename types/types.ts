@@ -6,6 +6,14 @@ export type GpuInfo = {
   temperatureGpu: number | null; // celsius
 };
 
+export type GpuMetric = {
+  label: string;
+  value: string;
+  valueNumber: number;
+  color: string;
+  showProgress: boolean;
+};
+
 export type CpuInfo = {
   load: number | null; // percent 0-100
   temperature: number | null; // celsius

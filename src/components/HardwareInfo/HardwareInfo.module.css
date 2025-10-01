@@ -1,4 +1,14 @@
-/* Card styles are inherited from parent */
+.card {
+  background: rgba(32, 36, 46, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 28px 36px;
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(6px);
+  color: #e6eaf2;
+}
 
 .header {
   display: flex;
@@ -10,6 +20,8 @@
 
 .title {
   margin: 0;
+  font-size: 1.5rem;
+  font-weight: 500;
 }
 
 .controls {
@@ -19,11 +31,12 @@
 }
 
 .button {
-  padding: 6px 10px;
+  padding: 6px 12px;
   border: none;
   border-radius: 4px;
   background: rgba(255, 255, 255, 0.1);
   color: inherit;
+  font-size: 0.9rem;
   cursor: pointer;
   transition: background 0.2s ease;
 }
@@ -33,27 +46,9 @@
 }
 
 .content {
-  margin-top: 16px;
-  display: grid;
-  gap: 16px;
-}
-
-.section {
-  margin-bottom: 16px;
-}
-
-.sectionTitle {
-  margin: 0 0 8px 0;
-}
-
-.metrics {
-  display: grid;
-  gap: 8px;
-}
-
-.metricRow {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .gpuSection {
@@ -67,4 +62,5 @@
 
 .loading {
   margin-top: 12px;
+  color: #e6eaf2;
 }

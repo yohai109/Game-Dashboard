@@ -1,0 +1,26 @@
+.cards {
+  display: grid;
+  gap: 8px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+/* Global styles that should be applied to the document */
+:global(body) {
+  margin: 0;
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  background:
+    radial-gradient(1000px 600px at 20% -10%, #2b2f3a 0%, transparent 60%),
+    radial-gradient(800px 500px at 120% 110%, #1b1f2a 0%, transparent 60%), #0f1218;
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
