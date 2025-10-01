@@ -8,28 +8,50 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  font-size: var(--text-base);
+  font-size: var(--text-sm);
   overflow: hidden;
+  transition: all var(--transition-normal);
+  gap: var(--space-3);
+}
+
+.container:hover {
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-primary-light);
 }
 
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: var(--space-3);
-  gap: var(--space-2);
+  padding: 0 0 var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+  gap: var(--space-3);
+  margin: 0;
 }
 
 .title {
   margin: 0;
   font-size: var(--text-sm);
   font-weight: var(--font-semibold);
-  color: var(--color-text-primary);
+  color: var(--color-text-secondary);
   letter-spacing: 0.05em;
   text-transform: uppercase;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.title::before {
+  content: "";
+  display: block;
+  width: 12px;
+  height: 12px;
+  background-color: var(--color-primary);
+  border-radius: 50%;
+  flex-shrink: 0;
 }
 
 .meta {
@@ -47,6 +69,12 @@
   padding: var(--space-1) var(--space-2);
   border-radius: var(--radius-full);
   font-weight: var(--font-medium);
+  transition: all var(--transition-normal);
+}
+
+.countBadge:hover {
+  background: var(--color-bg-secondary);
+  color: var(--color-text-primary);
 }
 
 .clearButton {
@@ -54,27 +82,35 @@
   background: transparent;
   color: var(--color-text-secondary);
   border: 1px solid var(--color-border);
-  padding: var(--space-1) var(--space-2);
+  padding: var(--space-1) var(--space-3);
   border-radius: var(--radius-full);
   cursor: pointer;
   transition: all var(--transition-normal);
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: var(--space-1);
+  font-weight: var(--font-medium);
 }
 
 .clearButton:hover {
   color: var(--color-error);
   border-color: var(--color-error);
   background: var(--color-bg-tertiary);
+  transform: translateY(-1px);
+}
+
+.clearButton:active {
+  transform: translateY(0);
 }
 
 .inputContainer {
   display: grid;
   grid-template-columns: 1fr auto;
   gap: var(--space-2);
-  margin-top: auto;
-  padding-top: var(--space-4);
+  margin: 0;
+  padding: var(--space-3) 0 0;
+  position: relative;
+  border-top: 1px solid var(--color-border);
 }
 
 .input {
@@ -86,11 +122,19 @@
   outline: none;
   transition: all var(--transition-normal);
   font-size: var(--text-sm);
+  height: 40px;
+  width: 100%;
+}
+
+.input::placeholder {
+  color: var(--color-text-tertiary);
+  opacity: 0.8;
 }
 
 .input:focus {
   border-color: var(--color-primary);
   box-shadow: 0 0 0 2px var(--color-primary-focus);
+  background: var(--color-bg-secondary);
 }
 
 .addButton {
@@ -99,44 +143,61 @@
   border: none;
   border-radius: var(--radius);
   padding: 0 var(--space-4);
+  height: 40px;
   cursor: pointer;
   transition: all var(--transition-normal);
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
   white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
 }
 
 .addButton:hover {
   background: var(--color-primary-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
 }
 
 .addButton:active {
-  transform: translateY(1px);
+  transform: translateY(0);
+  box-shadow: none;
 }
 
 .addButton:disabled {
   opacity: 0.5;
   cursor: not-allowed;
   background: var(--color-gray-600);
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.addButton::before {
+  content: "+";
+  font-size: var(--text-lg);
+  line-height: 1;
+  display: inline-block;
+  margin-right: 2px;
 }
 
 .taskList {
   list-style: none;
-  margin: var(--space-2) 0 0 0;
-  padding: 0;
+  margin: 0;
+  padding: var(--space-1) 0;
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
   flex: 1;
   overflow-y: auto;
-  padding-right: var(--space-1);
   scrollbar-width: thin;
   scrollbar-color: var(--color-border) transparent;
-  max-height: 400px;
+  max-height: 300px;
 }
 
 .taskList::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 
 .taskList::-webkit-scrollbar-track {
@@ -145,7 +206,12 @@
 
 .taskList::-webkit-scrollbar-thumb {
   background-color: var(--color-border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-full);
+  opacity: 0.5;
+}
+
+.taskList::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-text-tertiary);
 }
 
 .task {
@@ -158,11 +224,31 @@
   padding: var(--space-3);
   gap: var(--space-3);
   transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.task::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--color-primary);
+  opacity: 0;
+  transition: opacity var(--transition-normal);
 }
 
 .task:hover {
-  border-color: var(--color-primary);
+  border-color: var(--color-primary-light);
   background: var(--color-bg-secondary);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.task:hover::before {
+  opacity: 1;
 }
 
 .taskCheckbox {
@@ -170,16 +256,29 @@
   height: 18px;
   margin: 0;
   cursor: pointer;
-  accent-color: var(--color-primary);
+  appearance: none;
   border-radius: var(--radius-sm);
   border: 2px solid var(--color-border);
   background: var(--color-bg-secondary);
   transition: all var(--transition-normal);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .taskCheckbox:checked {
   background: var(--color-primary);
   border-color: var(--color-primary);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.taskCheckbox:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-primary-focus);
 }
 
 .taskLabel {
@@ -190,48 +289,118 @@
   white-space: nowrap;
   font-size: var(--text-sm);
   line-height: 1.5;
+  transition: all var(--transition-normal);
+  padding: var(--space-1) 0;
 }
 
 .task.done .taskLabel {
-  color: var(--color-text-secondary);
+  color: var(--color-text-tertiary);
   text-decoration: line-through;
+  opacity: 0.8;
 }
 
 .deleteButton {
-  background: transparent;
-  color: var(--color-text-secondary);
+  background: none;
   border: none;
+  color: var(--color-text-tertiary);
   cursor: pointer;
+  font-size: var(--text-base);
+  line-height: 1;
   padding: var(--space-1);
-  border-radius: var(--radius);
+  opacity: 0;
   transition: all var(--transition-normal);
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
 }
 
 .task:hover .deleteButton {
-  opacity: 1;
+  opacity: 0.6;
 }
 
 .deleteButton:hover {
-  background: var(--color-bg-tertiary);
   color: var(--color-error);
+  background: var(--color-bg-tertiary);
+  opacity: 1 !important;
+  transform: scale(1.1);
+}
+
+.deleteButton:active {
+  transform: scale(0.95);
 }
 
 .empty {
   margin-top: var(--space-4);
   color: var(--color-text-secondary);
-  font-size: var(--text-sm);
   font-style: italic;
   text-align: center;
   padding: var(--space-2);
 }
 
+/* Empty state styles */
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-4) 0;
+  color: var(--color-text-tertiary);
+  flex: 1;
+  margin: 0;
+}
+
+.emptyStateIcon {
+  font-size: var(--text-2xl);
+  margin-bottom: var(--space-2);
+  opacity: 0.7;
+}
+
+.emptyStateText {
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-2);
+}
+
+.emptyStateHint {
+  font-size: var(--text-xs);
+  opacity: 0.7;
+}
+
 @media (max-width: 768px) {
   .container {
     padding: var(--space-3);
+    gap: var(--space-2);
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+    padding-bottom: var(--space-2);
+  }
+
+  .meta {
+    width: 100%;
+    justify-content: space-between;
+    margin-top: var(--space-1);
+  }
+
+  .taskList {
+    max-height: 200px;
+    padding: var(--space-1) 0;
+  }
+
+  .taskLabel {
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  .inputContainer {
+    padding-top: var(--space-2);
   }
 
   .taskList {
