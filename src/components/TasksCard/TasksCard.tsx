@@ -1,5 +1,6 @@
-import { useMemo, useState, useCallback } from "react";
+import { useMemo, useState, useCallback, useRef, useEffect } from "react";
 import { useLocalStorageState } from "../../hooks/useLocalStorageState.ts";
+import { CardContainer } from "../CardContainer/CardContainer";
 import styles from "./TasksCard.module.css";
 
 type Task = {
@@ -12,6 +13,14 @@ export const TasksCard = () => {
   const [tasks, setTasks] = useLocalStorageState<Task[]>("tasks", []);
   const [text, setText] = useState<string>("");
   const [isInputFocused, setIsInputFocused] = useState(false);
+  const taskListRef = useRef<HTMLUListElement>(null);
+
+  // Auto-scroll to bottom when tasks change
+  useEffect(() => {
+    if (taskListRef.current) {
+      taskListRef.current.scrollTop = taskListRef.current.scrollHeight;
+    }
+  }, [tasks]);
 
   const { completed, remaining } = useMemo(() => {
     const completed = tasks.filter((t) => t.done).length;
@@ -47,10 +56,12 @@ export const TasksCard = () => {
   }, [setTasks]);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.tasks} aria-label="Tasks">
-        <div className={styles.header}>
-          <h2 className={styles.title}>Tasks</h2>
+    <CardContainer>
+      <div className="content" aria-label="Tasks">
+        <div className="header">
+          <h2 className="title">
+            <span>Tasks</span>
+          </h2>
           <div className={styles.meta}>
             {hasTasks && (
               <span className={styles.countBadge}>
@@ -65,64 +76,66 @@ export const TasksCard = () => {
           </div>
         </div>
 
-        <div className={styles.inputContainer}>
-          <input
-            className={styles.input}
-            type="text"
-            placeholder="Add a task and press Enter"
-            aria-label="New task"
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") addTask();
-            }}
-            onFocus={() => setIsInputFocused(true)}
-            onBlur={() => setIsInputFocused(false)}
-          />
-          <button
-            className={styles.addButton}
-            type="button"
-            onClick={addTask}
-            disabled={!text.trim()}
-          >
-            Add
-          </button>
-        </div>
-
-        {hasTasks ? (
-          <ul className={styles.taskList}>
-            {tasks.map((t) => (
-              <li key={t.id} className={`${styles.task} ${t.done ? styles.done : ""}`}>
-                <input
-                  type="checkbox"
-                  className={styles.taskCheckbox}
-                  checked={t.done}
-                  onChange={() => toggleTask(t.id)}
-                  aria-label={t.done ? "Mark as incomplete" : "Mark as complete"}
-                />
-                <span className={styles.taskLabel} title={t.text}>
-                  {t.text}
-                </span>
-                <button
-                  className={styles.deleteButton}
-                  aria-label={`Delete "${t.text}"`}
-                  onClick={() => deleteTask(t.id)}
-                >
-                  ✕
-                </button>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <div className={styles.emptyState}>
-            <div className={styles.emptyStateIcon}>📝</div>
-            <div className={styles.emptyStateText}>No tasks yet</div>
-            <div className={styles.emptyStateHint}>
-              {isInputFocused ? "Press Enter to add" : "Type above to get started"}
-            </div>
+        <div className={styles.tasksContent}>
+          <div className={styles.inputContainer}>
+            <input
+              className={styles.input}
+              type="text"
+              placeholder="Add a task and press Enter"
+              aria-label="New task"
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") addTask();
+              }}
+              onFocus={() => setIsInputFocused(true)}
+              onBlur={() => setIsInputFocused(false)}
+            />
+            <button
+              className={styles.addButton}
+              type="button"
+              onClick={addTask}
+              disabled={!text.trim()}
+            >
+              Add
+            </button>
           </div>
-        )}
+
+          {hasTasks ? (
+            <ul className={styles.taskList} ref={taskListRef}>
+              {tasks.map((t) => (
+                <li key={t.id} className={`${styles.task} ${t.done ? styles.done : ""}`}>
+                  <input
+                    type="checkbox"
+                    className={styles.taskCheckbox}
+                    checked={t.done}
+                    onChange={() => toggleTask(t.id)}
+                    aria-label={t.done ? "Mark as incomplete" : "Mark as complete"}
+                  />
+                  <span className={styles.taskLabel} title={t.text}>
+                    {t.text}
+                  </span>
+                  <button
+                    className={styles.deleteButton}
+                    aria-label={`Delete "${t.text}"`}
+                    onClick={() => deleteTask(t.id)}
+                  >
+                    ✕
+                  </button>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <div className={styles.emptyState}>
+              <div className={styles.emptyStateIcon}>📝</div>
+              <div className={styles.emptyStateText}>No tasks yet</div>
+              <div className={styles.emptyStateHint}>
+                {isInputFocused ? "Press Enter to add" : "Type above to get started"}
+              </div>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </CardContainer>
   );
 };

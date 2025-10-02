@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { usePreciseSecondTicker } from "../../hooks/usePreciseSecondTicker";
 import { formatDate, formatTime } from "../../utils/format";
+import { CardContainer } from "../CardContainer/CardContainer";
 import styles from "./WatchCard.module.css";
 
 export const WatchCard = () => {
@@ -8,8 +9,8 @@ export const WatchCard = () => {
   const { h, m, s } = useMemo(() => formatTime(now), [now]);
   const dateText = useMemo(() => formatDate(now), [now]);
   return (
-    <article className={styles.card}>
-      <div className={styles.watchContainer}>
+    <CardContainer>
+      <div className={styles.watchContent}>
         <time
           dateTime={now.toISOString()}
           className={styles.time}
@@ -26,6 +27,6 @@ export const WatchCard = () => {
           {dateText}
         </div>
       </div>
-    </article>
+    </CardContainer>
   );
 };
