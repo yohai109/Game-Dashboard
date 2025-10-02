@@ -1,6 +1,7 @@
 import { WatchCard } from "./components/WatchCard";
 import { TasksCard } from "./components/TasksCard";
 import { HardwareInfo } from "./components/HardwareInfo";
+import { SteamWidgets } from "./components/SteamWidgets";
 import styles from "./App.module.css";
 
 export const App = () => {
@@ -16,6 +17,9 @@ export const App = () => {
           </div>
           <div className={styles.column}>
             <HardwareInfo />
+          </div>
+          <div className={styles.column}>
+            <SteamWidgets />
           </div>
           <div className={styles.column}>
             <TasksCard />
